@@ -19,6 +19,7 @@ const ExchangeRateLabel: FC<ExchangeRateLabelProps> = ({
                                                          symbolSell,
                                                          amountSell,
                                                        }) => {
+  // в идеале еще добавить подсветку при изменении рейтов
   if (bitcoinRate) {
     return (
       <div className="text-center">

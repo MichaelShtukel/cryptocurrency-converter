@@ -51,7 +51,7 @@ class ExchangeRatesRequester {
   }
 
   start() {
-    this.intervalId = setInterval(() => this.updateExchangeRates(), 10000)
+    this.intervalId = setInterval(() => this.updateExchangeRates(), 60000)
   }
 
   // надо как то красиво глушить и перезапускать это
