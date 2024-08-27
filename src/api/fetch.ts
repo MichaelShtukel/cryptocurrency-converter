@@ -27,24 +27,3 @@ export async function fetchAxios<T>(url: string) {
     console.error('Failed to fetch data:', error);
   }
 }
-
-const axiosProxyInstance = axios.create();
-
-axiosProxyInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    // Можно выбросить тостер
-    return Promise.reject(error);
-  }
-);
-
-export async function fetchProxyAxios<T>(url: string) {
-  try {
-    const response = await axiosProxyInstance.get(url);
-    return response.data as T;
-  } catch (error) {
-    console.error('Failed to fetch data:', error);
-  }
-}

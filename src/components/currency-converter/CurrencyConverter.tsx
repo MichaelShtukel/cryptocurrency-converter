@@ -1,33 +1,27 @@
 'use client'
 
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import ExchangeRateLabel from "@/components/exchange-rate-label/ExchangeRateLabel";
 import Input from '@/primitives/input/Input';
 import { Currency } from '@/interfaces/currencies';
 import CurrencySelect from '@/components/currency-select/CurrencySelect';
 import SwapButton from '@/components/swap-button/SwapButton';
-import { getExchangeRate } from '@/api/getExchangeRate';
+import useExchangeRate from '@/hooks/useExchangeRate';
 
 type CurrencyConverterProps = PropsWithChildren<{
   currencies: Currency[]
 }>
 
 const CurrencyConverter: FC<CurrencyConverterProps> = ({currencies, children}) => {
-  const [buyCurrency, setBuyCurrency] = useState<Currency | undefined>(undefined)
-  const [buyAmount, setBuyAmount] = useState<string>('1')
-  const [sellCurrency, setSellCurrency] = useState<Currency | undefined>(undefined)
-  const [sellAmount, setSellAmount] = useState<string>('')
-
-  useEffect(() => {
-    if (buyCurrency && sellCurrency) {
-      (async () => {
-        const rate = await getExchangeRate(buyCurrency.symbol, sellCurrency.symbol)
-        if (rate) {
-          setSellAmount(String(Number(rate) * Number(buyAmount)))
-        }
-      })()
-    }
-  }, [buyAmount, buyCurrency, currencies, sellCurrency])
+  const {
+    buyCurrency,
+    setBuyCurrency,
+    buyAmount,
+    setBuyAmount,
+    sellCurrency,
+    setSellCurrency,
+    sellAmount,
+  } = useExchangeRate()
 
   const onSwap = () => {
     setBuyCurrency(sellCurrency)
